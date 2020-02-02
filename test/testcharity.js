@@ -20,7 +20,6 @@ contract("Test Charity", function(accounts) {
 
     describe("Testing charity functions (integration)", function() {
         it("creator can add new charity", function() {
-            // Let accounts[2] be the "WWF" address
             testContract.getAccountBalance(accounts[2]).then(function(res) {
                 originalBalance = parseFloat(res.toString());
             });
@@ -34,7 +33,6 @@ contract("Test Charity", function(accounts) {
             });
         });
         it("non-creator cannot add new charity", function() {
-            // Let accounts[3] be the RedCross address
             testContract.addVoteOption("RedCross", accounts[3], {from: accounts[1]});
             return testContract.votingOptionsCount().then(function(res) {
                 expect(res.toString()).to.be.equal("1");
@@ -63,7 +61,6 @@ contract("Test Charity", function(accounts) {
                 expect(res.toString()).to.be.equal("100");
             });
         });
-        // we assume that this runs within 10s, this might lead to low probability of flakiness
         it("disperse cannot proceed during voting", function() {
             testContract.disperse();
             return testContract.getBalance().then(function(res) {
@@ -71,7 +68,6 @@ contract("Test Charity", function(accounts) {
             });
         });
         it("disperse can proceed after voting", function() {
-            // wait out the rest of the voting
             var start = new Date().getTime();
             var end = start;
             while(end < start + 5000) {
